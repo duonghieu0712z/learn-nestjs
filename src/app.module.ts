@@ -20,7 +20,7 @@ import paginate = require('mongoose-paginate-v2');
       load: [configuration],
       isGlobal: true,
     }),
-    MongooseModule.forRoot(configuration().mongoUri, {
+    MongooseModule.forRoot(configuration().mongoUri + configuration().dbName, {
       connectionFactory(connection) {
         connection.plugin(paginate);
         return connection;
