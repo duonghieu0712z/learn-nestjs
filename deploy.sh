@@ -1,7 +1,5 @@
 #!/bin/bash
 
-NAME="learn-nestjs"
-
 # Deploy to docker
 echo "Start deploy project to Docker"
 echo "============================================"
@@ -34,4 +32,6 @@ echo ""
 # Log running container
 echo "Waiting 5 seconds to running program"
 sleep 5
-docker logs $NAME
+
+NAME_CONTAINER="api"
+docker logs $NAME_CONTAINER
