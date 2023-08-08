@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function title() {
+title() {
 	echo ""
 	echo "============================================"
 	echo ""
@@ -10,12 +10,12 @@ function title() {
 	echo ""
 }
 
-tilte "Start deploying project to Docker"
+title "Start deploying project to Docker"
 
 # Deploy to docker
 docker compose up -d --force-recreate --build
 
-tilte "Finish deploying project to Docker"
+title "Finish deploying project to Docker"
 
 # Check dangling images
 none_images=$(docker images -f "dangling=true" -q)
