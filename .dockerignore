@@ -25,5 +25,5 @@ test
 .DS_Store
 
 /.docker
-
+deploy.sh
 README.md

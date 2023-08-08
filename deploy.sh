@@ -1,37 +1,37 @@
 #!/bin/bash
 
-# Deploy to docker
-echo "Start deploy project to Docker"
-echo "============================================"
-echo ""
+function title() {
+	echo ""
+	echo "============================================"
+	echo ""
+	echo "$1"
+	echo ""
+	echo "============================================"
+	echo ""
+}
 
+tilte "Start deploying project to Docker"
+
+# Deploy to docker
 docker compose up -d --force-recreate --build
 
-echo ""
-echo "============================================"
-echo "Finish deploy project to Docker"
+tilte "Finish deploying project to Docker"
 
-echo ""
-echo "============================================"
-echo ""
-
-# Remove <none> images
+# Check dangling images
 none_images=$(docker images -f "dangling=true" -q)
 num_of_none_images=$(echo "$none_images" | wc -w)
-echo "Docker has $num_of_none_images <none> images"
+echo "Docker has $num_of_none_images dangling images"
 
+# Remove dangling images
 if [ "$num_of_none_images" -gt 0 ]; then
 	docker rmi "$none_images"
-	echo "Remove $num_of_none_images <none> images in Docker successfully"
+	echo "Remove $num_of_none_images dangling images in Docker successfully"
 fi
 
-echo ""
-echo "============================================"
-echo ""
+title "Waiting 5 seconds to running program"
 
-# Log running container
-echo "Waiting 5 seconds to running program"
 sleep 5
 
+# Log running container
 NAME_CONTAINER="api"
 docker logs $NAME_CONTAINER
