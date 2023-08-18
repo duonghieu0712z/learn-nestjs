@@ -1,16 +1,42 @@
 name: Docker Image CI
+
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v3
+
+    - name: Login to registry ${{ env.REGISTRY }}
+      uses: docker/login-action@v2.2.0
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Lowercase repository
+      id: string
+      uses: ASzc/change-string-case-action@v5
+      with:
+        string: ${{ env.IMAGE_NAME }}
+    
     - name: Build and push the Docker image
       uses: docker/build-push-action@v4.1.1
       with:
-        tags: latest
+        context: .
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}:latest
