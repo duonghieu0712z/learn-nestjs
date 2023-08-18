@@ -5,12 +5,9 @@ services:
     container_name: api
     env_file:
       - ./.env
-    build: .
     environment:
       - MONGO_URI=mongodb://mongo:27017/
-    volumes:
-      - .:/tmp/src/app:cached
-    restart: always
+    restart: unless-stopped
     ports:
       - ${PORT}:${PORT}
     depends_on:

@@ -11,6 +11,7 @@
 .gitignore
 
 Dockerfile
+docker-compose.yaml
 .dockerignore
 
 /.vscode
@@ -25,5 +26,7 @@ test
 .DS_Store
 
 /.docker
+
 deploy.sh
+
 README.md
