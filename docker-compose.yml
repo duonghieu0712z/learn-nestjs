@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  api:
+    image: ghcr.io/DuongHieu0712z/learn-nestjs:latest
+    container_name: api
+    env_file:
+      - ./.env
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/
+    restart: unless-stopped
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      - db
+  db:
+    image: mongo:latest
+    container_name: mongo
+    volumes:
+      - .docker/data/db:/data/db
+    ports:
+      - 27017:27017
+    restart: unless-stopped
