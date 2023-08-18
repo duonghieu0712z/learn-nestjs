@@ -18,9 +18,6 @@ jobs:
       packages: write
     
     steps:
-    - name: downcase REPO
-      run: |
-        echo "REPO=${GITHUB_REPOSITORY,,}" >> ${GITHUB_ENV}
     - name: Checkout repository
       uses: actions/checkout@v3
 
@@ -30,10 +27,16 @@ jobs:
         registry: ${{ env.REGISTRY }}
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Lowercase repository
+      id: string
+      uses: ASzc/change-string-case-action@v5
+      with:
+        string: ${{ env.IMAGE_NAME }}
     
     - name: Build and push the Docker image
       uses: docker/build-push-action@v4.1.1
       with:
         context: .
         push: true
-        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+        tags: ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}:latest
