@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   api:
-    image: learn-nestjs
+    image: ghcr.io/DuongHieu0712z/learn-nestjs:latest
     container_name: api
     env_file:
       - ./.env
