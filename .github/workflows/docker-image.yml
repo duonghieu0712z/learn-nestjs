@@ -31,7 +31,7 @@ jobs:
             type=ref,event=branch
             type=ref,event=tag
             type=ref,event=pr
-            type=semver,pattern=v{{version}},value=v0.0.1
+            type=semver,pattern=v{{version}},value=v0.0.2
             type=sha
           flavor: |
             latest=true
