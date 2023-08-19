@@ -6,7 +6,7 @@ on:
     branches: ['main']
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  LATEST_TAG: ${{ github.repository }}:latest
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,10 +26,19 @@ jobs:
         id: string
         uses: ASzc/change-string-case-action@v5
         with:
-          string: ${{ env.IMAGE_NAME }}
-      - name: Build and push the Docker image
+          string: ${{ env.LATEST_TAG }}
+      - name: Build and push Docker image
         uses: docker/build-push-action@v4.1.1
         with:
           context: .
           push: true
-          tags: ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}:latest
+          tags: ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}
+  success:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Slack Notification
+        uses: 8398a7/action-slack@v3.2.0
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,author
