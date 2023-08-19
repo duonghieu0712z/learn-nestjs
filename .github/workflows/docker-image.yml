@@ -31,8 +31,7 @@ jobs:
             type=ref,event=branch
             type=ref,event=tag
             type=ref,event=pr
-            type=semver,pattern=v{{version}},value=v0.0.2
-            type=sha
+            type=semver,pattern={{raw}}
           flavor: |
             latest=true
       - name: Setup Docker QEMU
