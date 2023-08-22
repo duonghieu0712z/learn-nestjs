@@ -56,4 +56,4 @@ jobs:
     needs: build
     steps:
       - name: Notification
-        run: echo "Success deploy ${{ github.head_ref }}"
+        run: echo "Success deploy ${{ github.ref }}"
