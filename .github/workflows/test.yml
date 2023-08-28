@@ -1,0 +1,18 @@
+name: Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: test
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Test
+      run: echo "${{ env }} ${{ env.SECRET_ENV }} ${{ env.VARIABLE_ENV }}"
